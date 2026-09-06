@@ -1,6 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class Person{
+protected:
+    int id;
+    string name;
+    string email_id;
+    string phone_no;
+   
+public:
+
+    Person(int pid,string nm,string email,string no){
+        id = pid;
+        name = nm;
+        email_id = email;
+        phone_no = no;
+    }
+
+    int getId(){
+        return id;
+    }
+
+    string getName(){
+        return name;
+    }
+
+    string getEmailId(){
+        return email_id;
+    }
+
+    string getPhoneNo(){
+        return phone_no;
+    }
+};
+
 class Book
 {
 private:
@@ -44,28 +77,16 @@ public:
     }
 };
 
-class Member
+class Member : public Person
 {
 private:
-    int member_id;
-    string name;
+
     vector<int> borrowed_books;
 
 public:
-    Member(int id, string s)
+    Member(int id, string nm, string em, string pn) : Person(id,nm,em,pn)
     {
-        member_id = id;
-        name = s;
-    }
 
-    int getMemberId()
-    {
-        return member_id;
-    }
-
-    string getName()
-    {
-        return name;
     }
 
     vector<int> getBorrowedBooks()
@@ -101,6 +122,12 @@ public:
     }
 };
 
+class Librarian : public Person
+{
+public:
+    Librarian(int id,string name,string email, string no) : Person(id,name,email,no){};
+};
+
 class Library
 {
 private:
@@ -116,10 +143,10 @@ public:
             cout << "Book already exists" << endl;
     }
 
-    void registerMember(int id, string s)
+    void registerMember(int id, string nm, string em, string no)
     {
         if (members.find(id) == members.end())
-            members.emplace(id, Member(id, s));
+            members.emplace(id, Member(id,nm,em,no));
         else
             cout << "Member already exists" << endl;
     }
@@ -198,11 +225,11 @@ int main()
     lib.addBook(1,"Science","S Chand");
     lib.addBook(2,"Maths","Rd Sharma");
     lib.addBook(3,"Hindi","Prem Chand");
-    lib.registerMember(101,"Devansh");
-    lib.registerMember(102,"Vishh");
-    lib.issueBook(2,103);
+    lib.registerMember(101,"Devansh","devgarg1276@gmail.com","9571201276");
+    lib.registerMember(102,"Vishh","visemail","88997");
+    lib.issueBook(2,101);
     lib.issueBook(1,102);
-    lib.returnBook(2,102);
+    lib.returnBook(2,101);
     
     lib.displayAllBooks();
     return 0;
